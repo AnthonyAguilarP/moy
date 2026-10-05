@@ -1,0 +1,54 @@
+---
+import '../styles/global.css';
+import { type Props } from 'astro';
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description = 'Celebrando nuestro aniversario - Marcela & Tú' } = Astro.props;
+const site = Astro.site || 'https://aniversario-marcela.local';
+const canonicalURL = new URL(Astro.url.pathname, site);
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#e0e5ec" />
+    <link rel="canonical" href={canonicalURL} />
+    <title>{title}</title>
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  </head>
+  <body class="min-h-screen bg-neumorph-bg relative overflow-x-hidden">
+    <!-- Ambient background elements -->
+    <div class="fixed inset-0 pointer-events-none z-0" aria-hidden="true">
+      <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-neumorph-accent/10 rounded-full blur-3xl animate-float-slow"></div>
+      <div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-neumorph-sage/10 rounded-full blur-3xl animate-float-delayed"></div>
+      <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-72 h-72 bg-neumorph-lavender/10 rounded-full blur-3xl animate-pulse-soft"></div>
+    </div>
+    
+    <!-- Floating decorative particles -->
+    <div class="fixed inset-0 pointer-events-none z-0" aria-hidden="true" id="particles-container"></div>
+    
+    <slot />
+    
+    <!-- GSAP & ScrollTrigger will be loaded in components -->
+    <script is:inline>
+      // Global GSAP configuration
+      window.gsapConfig = {
+        force3D: true,
+        nullTargetWarn: false,
+      };
+    </script>
+  </body>
+</html>
